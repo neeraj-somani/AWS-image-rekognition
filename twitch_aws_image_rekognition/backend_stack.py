@@ -121,7 +121,7 @@ class BackendStack(cdk.Stack):
         rek_fn.add_event_source(event_sources.S3EventSource(bucket=image_bucket, events=[s3.EventType.OBJECT_CREATED]))
         
         ## =====================================================================================
-        ## Lambda for Synchronous Front End
+        ## Lambda for Synchronous Front End that connects to API Gateway
         ## =====================================================================================
         
         serviceFn = lb.Function(
@@ -140,6 +140,98 @@ class BackendStack(cdk.Stack):
         image_bucket.grant_write(serviceFn)
         resized_image_bucket.grant_write(serviceFn)
         table.grant_read_write_data(serviceFn)
+        
+        
+        ## =====================================================================================
+        ## Creating the API Gateway resource
+        ## =====================================================================================
+        
+        cors_options = apigw.CorsOptions(
+            allow_origins=apigw.Cors.ALL_ORIGINS, 
+            allow_methods=apigw.Cors.ALL_METHODS
+        )
+        
+        api = apigw.LambdaRestApi(
+            self,
+            "imageAPI",
+            default_cors_preflight_options=cors_options,
+            handler=serviceFn,
+            proxy=False, ## here API gateway is responsible for all the reponse for any request that comes to it
+            
+        )
+        
+        ## =====================================================================================
+        ## This construct connects Amazon API Gateway with AWS Lambda Integration
+        ## =====================================================================================
+        # New Amazon API Gateway with AWS Lambda Integration
+        success_response = apigw.IntegrationResponse(
+            status_code="200",
+            response_parameters={"method.response.header.Access-Control-Allow-Origin": "'*'"},
+        )
+        error_response = apigw.IntegrationResponse(
+            selection_pattern="(\n|.)+",
+            status_code="500",
+            response_parameters={"method.response.header.Access-Control-Allow-Origin": "'*'"},
+        )
+
+        request_template = json.dumps(
+            {
+                "action": "$util.escapeJavaScript($input.params('action'))",
+                "key": "$util.escapeJavaScript($input.params('key'))",
+            }
+        )
+
+        lambda_integration = apigw.LambdaIntegration(
+            serviceFn,
+            proxy=False,
+            request_parameters={
+                "integration.request.querystring.action": "method.request.querystring.action",
+                "integration.request.querystring.key": "method.request.querystring.key",
+            },
+            request_templates={"application/json": request_template},
+            passthrough_behavior=apigw.PassthroughBehavior.WHEN_NO_TEMPLATES,
+            integration_responses=[success_response, error_response],
+        )
+        
+        ## =====================================================================================
+        ## API Gateway - adding resource and request methods
+        ## =====================================================================================
+        
+        ## Here we are using our earlier created "API gateway" and adding a resource to it
+        imageAPI = api.root.add_resource("images")
+        
+        success_resp = apigw.MethodResponse(
+            status_code="200",
+            response_parameters={"method.response.header.Access-Control-Allow-Origin": True},
+        )
+        error_resp = apigw.MethodResponse(
+            status_code="500",
+            response_parameters={"method.response.header.Access-Control-Allow-Origin": True},
+        )
+
+        # this is GET method for /images resource
+        get_method = imageAPI.add_method(
+            "GET",
+            lambda_integration,
+            #authorization_type=apigw.AuthorizationType.COGNITO,
+            request_parameters={
+                "method.request.querystring.action": True,
+                "method.request.querystring.key": True,
+            },
+            method_responses=[success_resp, error_resp],
+        )
+        # this is DELETE method for /images resource
+        delete_method = imageAPI.add_method(
+            "DELETE",
+            lambda_integration,
+            #authorization_type=apigw.AuthorizationType.COGNITO,
+            request_parameters={
+                "method.request.querystring.action": True,
+                "method.request.querystring.key": True,
+            },
+            method_responses=[success_resp, error_resp],
+        )
+        
         
         
         
