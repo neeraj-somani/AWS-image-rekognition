@@ -24,7 +24,7 @@ class BackendStack(cdk.Stack):
         ## Image Bucket
         ## =====================================================================================
         # below line creates the S3 bucket
-        image_bucket = s3.Bucket(self, IMG_BUCKET_NAME, removal_policy=cdk.RemovalPolicy.DESTROY)
+        image_bucket = s3.Bucket(self, IMG_BUCKET_NAME , bucket_name=IMG_BUCKET_NAME, removal_policy=cdk.RemovalPolicy.DESTROY)
         # below line brings the output back to cloudformation and to log files, basically bucket name
         cdk.CfnOutput(self, "imageBucket", value=image_bucket.bucket_name)
         
@@ -32,7 +32,7 @@ class BackendStack(cdk.Stack):
         ## Thumbnail Bucket
         ## =====================================================================================
         resized_image_bucket = s3.Bucket(
-            self, RESIZED_IMG_BUCKET_NAME, removal_policy=cdk.RemovalPolicy.DESTROY
+            self, RESIZED_IMG_BUCKET_NAME, bucket_name=RESIZED_IMG_BUCKET_NAME, removal_policy=cdk.RemovalPolicy.DESTROY
         )
         cdk.CfnOutput(self, "resizedBucket", value=resized_image_bucket.bucket_name)
 
@@ -91,7 +91,7 @@ class BackendStack(cdk.Stack):
             environment={
                 "TABLE": table.table_name,
                 "BUCKET": image_bucket.bucket_name,
-                "THUMBBUCKET": resized_image_bucket.bucket_name,
+                "RESIZEDBUCKET": resized_image_bucket.bucket_name,
             },
         )
         

@@ -12,7 +12,7 @@ import uuid
 from PIL import Image
 import json
 
-#thumbBucket = os.environ['RESIZEDBUCKET']
+thumbBucket = os.environ['RESIZEDBUCKET']
 
 # Set the minimum confidence for Amazon Rekognition
 
@@ -45,7 +45,7 @@ def handler(event, context):
         ourKey = record['s3']['object']['key']
 
         # For each bucket/key, retrieve labels
-        #generateThumb(ourBucket, ourKey)
+        generateThumb(ourBucket, ourKey)
         rekFunction(ourBucket, ourKey)
 
     return
