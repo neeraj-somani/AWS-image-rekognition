@@ -37,12 +37,12 @@ def handler(event, context):
     print("Lambda processing event: ", event)
 
     # For each message (photo) get the bucket name and key
-    # changes response to record
-    for record in event['Records']:
-        #formatted = json.loads(response['body'])
-        #for record in formatted['Records']:
-        ourBucket = record['s3']['bucket']['name']
-        ourKey = record['s3']['object']['key']
+
+    for response in event['Records']:
+        formatted = json.loads(response['body']) ## this line added at the time of SQS to pick records from SQS
+        for record in formatted['Records']:
+            ourBucket = record['s3']['bucket']['name']
+            ourKey = record['s3']['object']['key']
 
         # For each bucket/key, retrieve labels
         generateThumb(ourBucket, ourKey)

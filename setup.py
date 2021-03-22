@@ -38,6 +38,7 @@ setuptools.setup(
         "aws_cdk.aws_apigateway==1.92.0",
         "aws_cdk.aws_cognito==1.92.0",
         "aws_cdk.aws_s3_notifications==1.92.0",
+        "aws_cdk.aws_s3_deployment==1.92.0",
 
     ],
 
