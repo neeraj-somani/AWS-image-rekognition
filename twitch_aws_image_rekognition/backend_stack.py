@@ -150,7 +150,7 @@ class BackendStack(cdk.Stack):
         image_bucket.grant_read(rek_fn)
         
         # below line gives write permission to lambda function to write resized images to resized S3 bucket
-        resized_image_bucket.grant_write(rek_fn)
+        resized_image_bucket.grant_put(rek_fn)
         
         # below line gives write permission to lambda function to write images details to dynamodb table
         table.grant_write_data(rek_fn)
@@ -286,6 +286,7 @@ class BackendStack(cdk.Stack):
             provider_arns=[user_pool.user_pool_arn],
             rest_api_id=api.rest_api_id,
             type="COGNITO_USER_POOLS",
+            ## something is wrong over here, its not working currently
         )
         
         ## =====================================================================================
@@ -381,7 +382,7 @@ class BackendStack(cdk.Stack):
         get_method = imageAPI.add_method(
             "GET",
             lambda_integration,
-            #authorization_type=apigw.AuthorizationType.COGNITO,
+            authorization_type=apigw.AuthorizationType.COGNITO,
             request_parameters={
                 "method.request.querystring.action": True,
                 "method.request.querystring.key": True,
@@ -392,7 +393,7 @@ class BackendStack(cdk.Stack):
         delete_method = imageAPI.add_method(
             "DELETE",
             lambda_integration,
-            #authorization_type=apigw.AuthorizationType.COGNITO,
+            authorization_type=apigw.AuthorizationType.COGNITO,
             request_parameters={
                 "method.request.querystring.action": True,
                 "method.request.querystring.key": True,
