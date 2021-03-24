@@ -7,7 +7,7 @@ In a nutshell this project is "Image Object Detection on AWS". Also, I am from D
 
 Please read this [blog](https://neerajsomani.medium.com/aws-image-object-detection-project-b3a1f8c1b3b5) to understand it in more detail.
 
-
+# Architecture diagram
 ![Architecture diagram](photos/FinalSS-CDKproject.png?raw=true "Architecture diagram")
 
 This project originally created in "typescript" language but due to popularity of python, I created the same in python.
@@ -19,7 +19,7 @@ Concepts that you are going to leverage are, "AWS + python + IAC".
 
 Note: python backend code and typescript backend code is same in-terms of functionality.
 
-So what are we going to build using AWS CDK: Below is the architecture.
+# So what are we going to build using AWS CDK: Below is the architecture.
 
 1. Three S3 buckets for different purposes
 
@@ -43,7 +43,7 @@ It allows multiple users to use application at the same time. Images wouldn't ge
 rekognitionLambda - this function fetch user uploaded images and connects to AWS Rekognition service to perform object detection task.
 servicelambda - this function allows users to fetch those keywords detected in an image and user can even delete an image
 
-## Below are few useful details from AWS CDK 
+# Below are few useful details from AWS CDK 
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
