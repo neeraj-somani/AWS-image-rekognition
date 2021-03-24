@@ -14,7 +14,7 @@ This project originally created in "typescript" language but due to popularity o
 
 Concepts that you are going to leverage are, "AWS + python + IAC".
 
-- [This repository written in Python language]
+- [This repository written in Python language](https://github.com/neeraj-somani/TwitchAWS-image-rekognition)
 
 - [typescript Backend code](https://github.com/aws-samples/aws-dev-hour-backend)
 
