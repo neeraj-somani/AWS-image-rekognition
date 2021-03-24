@@ -12,8 +12,8 @@ This project originally created in "typescript" language but due to popularity o
 
 Concepts that you are going to leverage are, "AWS + python + IAC".
 
-typescript Backend code: https://github.com/aws-samples/aws-dev-hour-backend
-JS Frontend code: https://github.com/aws-samples/aws-dev-hour-frontend
+[typescript Backend code](https://github.com/aws-samples/aws-dev-hour-backend)
+[JS Frontend code](https://github.com/aws-samples/aws-dev-hour-frontend)
 
 Note: python backend code and typescript backend code is same in-terms of functionality.
 
