@@ -5,7 +5,7 @@ What is this project all about? and how can you also implement the same?
 
 In a nutshell this project is "Image Object Detection on AWS". Also, I am from DevOps and cloud Engineering background so, I will be explaining backend infrastructure development part, but you can even utilize the same backend code and connect it with front-end to have a great full stack application experience.
 
-Please read this [blog] (https://neerajsomani.medium.com/aws-image-object-detection-project-b3a1f8c1b3b5) to understand it in more detail.
+Please read this [blog](https://neerajsomani.medium.com/aws-image-object-detection-project-b3a1f8c1b3b5) to understand it in more detail.
 
 
 This project originally created in "typescript" language but due to popularity of python, I created the same in python.
