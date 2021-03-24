@@ -8,7 +8,7 @@ In a nutshell this project is "Image Object Detection on AWS". Also, I am from D
 Please read this [blog](https://neerajsomani.medium.com/aws-image-object-detection-project-b3a1f8c1b3b5) to understand it in more detail.
 
 
-[![Architecture diagram](photos/FinalSS-CDKproject.png?raw=true "Architecture diagram")]
+![Architecture diagram](photos/FinalSS-CDKproject.png?raw=true "Architecture diagram")
 
 This project originally created in "typescript" language but due to popularity of python, I created the same in python.
 
