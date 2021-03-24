@@ -1,7 +1,7 @@
 
 # Welcome to AWS Image Object Detection Python project!
 
-What is this project all about? and how can you also implement the same? Please read this blog to understand it in more detail.
+What is this project all about? and how can you also implement the same? Please read this [blog] (https://neerajsomani.medium.com/aws-image-object-detection-project-b3a1f8c1b3b5) to understand it in more detail.
 
 In a nutshell this project is "Image Object Detection on AWS". Also, I am from DevOps and cloud Engineering background so, I will be explaining backend infrastructure development part, but you can even utilize the same backend code and connect it with front-end to have a great full stack application experience.
 
